@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: 调用任务派发接口
         run: |
-          curl -X GET "https://www.55dui.com/api/cron.php?action=all&secret=BzTeam2024Secure!"
+          curl -X GET "https://www.55dui.com/api/cron.php"
