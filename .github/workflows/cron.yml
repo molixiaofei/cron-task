@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: 调用任务派发接口
         run: |
-          curl -X GET "https://www.55dui.com/api/cron.php"
+          curl -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" --connect-timeout 10 -k https://www.55dui.com/api/cron.php
