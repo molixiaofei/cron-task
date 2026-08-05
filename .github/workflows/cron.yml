@@ -2,13 +2,25 @@ name: 常规任务派发
 
 on:
   schedule:
-    - cron: '0 * * * *'   # 0 * * * *   ← 每小时执行一次    */30 * * * * ← 每30分钟执行一次   0 8 * * *   ← 每天早上8点执行
+    - cron: '0 * * * *'   # 每小时执行一次
   workflow_dispatch:       # 允许手动触发
 
 jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
+      - name: 网络诊断（调试用，看日志输出）
+        run: |
+          nslookup www.55dui.com 1.1.1.1
+          dig www.55dui.com @1.1.1.1
+
       - name: 调用任务派发接口
         run: |
-          curl -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" --connect-timeout 10 -k https://www.55dui.com/api/cron.php
+          curl -v \
+            -L \
+            -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            --connect-timeout 12 \
+            --max-time 20 \
+            --retry 2 \
+            --retry-delay 3 \
+            https://www.55dui.com/api/cron.php
