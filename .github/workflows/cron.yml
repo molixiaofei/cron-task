@@ -1,26 +1,16 @@
-name: 常规任务派发
-
+name: 定时任务名称
 on:
   schedule:
-    - cron: '0 * * * *'   # 每小时执行一次
-  workflow_dispatch:       # 允许手动触发
+    # 使用 Cron 语法，注意是 UTC 时间
+    - cron: '0 2 * * *'  # 每天凌晨2点(UTC)执行
+  workflow_dispatch: # 强烈建议添加，方便手动测试
 
 jobs:
-  trigger:
+  your-job:
     runs-on: ubuntu-latest
     steps:
-      - name: 网络诊断（调试用，看日志输出）
+      - uses: actions/checkout@v4
+      - name: 执行你的脚本
         run: |
-          nslookup www.55dui.com 1.1.1.1
-          dig www.55dui.com @1.1.1.1
-
-      - name: 调用任务派发接口
-        run: |
-          curl -v \
-            -L \
-            -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-            --connect-timeout 12 \
-            --max-time 20 \
-            --retry 2 \
-            --retry-delay 3 \
-            https://www.55dui.com/api/cron.php
+          # 在这里写你的命令，或运行项目中的脚本
+          echo "Hello, world!"
