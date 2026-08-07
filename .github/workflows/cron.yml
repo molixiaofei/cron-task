@@ -1,25 +1,20 @@
 # 工作流名称
 name: 定时任务
 
-# 触发条件：定时任务
+# 触发条件
 on:
   schedule:
     # 每天北京时间上午8点执行 (UTC时间 0:00)
-    # 分钟 小时 日 月 周
-    - cron: '0 * * * *'
+    - cron: '0 0 * * *'   # 👈 改了：0点UTC = 8点北京时间
+  workflow_dispatch:        # 👈 新增：支持手动触发
 
 # 定义任务
 jobs:
-  # 任务ID，可自定义
   visit-url:
-    # 任务名称
     name: Visit URL
-    # 运行环境：使用GitHub官方提供的Ubuntu虚拟机
     runs-on: ubuntu-latest
 
-    # 任务包含的步骤
     steps:
-      # 使用单引号包裹整个URL，防止特殊字符（如 & 和 !）被Shell错误解析
       - name: Execute curl request
         run: |
           echo "开始执行定时任务..."
