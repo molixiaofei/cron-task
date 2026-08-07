@@ -1,16 +1,27 @@
-name: 定时任务名称
+# 工作流名称
+name: 定时任务
+
+# 触发条件：定时任务
 on:
   schedule:
-    # 使用 Cron 语法，注意是 UTC 时间
-    - cron: '0 2 * * *'  # 每天凌晨2点(UTC)执行
-  workflow_dispatch: # 强烈建议添加，方便手动测试
+    # 每天北京时间上午8点执行 (UTC时间 0:00)
+    # 分钟 小时 日 月 周
+    - cron: '0 0 * * *'
 
+# 定义任务
 jobs:
-  your-job:
+  # 任务ID，可自定义
+  visit-url:
+    # 任务名称
+    name: Visit URL
+    # 运行环境：使用GitHub官方提供的Ubuntu虚拟机
     runs-on: ubuntu-latest
+
+    # 任务包含的步骤
     steps:
-      - uses: actions/checkout@v4
-      - name: 执行你的脚本
+      # 使用单引号包裹整个URL，防止特殊字符（如 & 和 !）被Shell错误解析
+      - name: Execute curl request
         run: |
-          # 在这里写你的命令，或运行项目中的脚本
-          echo "Hello, world!"
+          echo "开始执行定时任务..."
+          curl -L -m 30 'https://www.55dui.com/api/cron.php?action=all&secret=BzTeam2024Secure!'
+          echo "定时任务执行完成"
